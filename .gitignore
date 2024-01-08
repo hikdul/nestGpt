@@ -33,3 +33,7 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# configuracion de amibente
+# buscar en ==> https://platform.openai.com/api-keys
+.env

@@ -27,6 +27,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## License
+## archivo .env
 
-Nest is [MIT licensed](LICENSE).
+crear el archivo basado en el archivo .end.template
+
+* OPENAI_API_KEY key personal de openAPI
