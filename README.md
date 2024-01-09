@@ -32,3 +32,18 @@ $ npm run start:prod
 crear el archivo basado en el archivo .end.template
 
 * OPENAI_API_KEY key personal de openAPI
+
+## ramas y actividades
+
+### proscons
+
+aca la idea es un analista de pros y contra sobre X tema. 
+
+en esta seccion se revisa los siguientes datos
+
+* OpenAI Stream
+* For await
+* Decoradores nuevos como
+* @Res
+* Chunks
+* DTOs

@@ -1,6 +1,7 @@
 //import { orthographyDTO } from "../DTOs"
 
 import OpenAI from "openai"
+import { options } from "./interfaces";
 
 export const orthographyCheckUseCase = async (openai: OpenAI, { prompt }: options) => 
 {
@@ -46,7 +47,3 @@ export const orthographyCheckUseCase = async (openai: OpenAI, { prompt }: option
     return resp
 }
 
-
-interface options {
-    prompt: string
-}

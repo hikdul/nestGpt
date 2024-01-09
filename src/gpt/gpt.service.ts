@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { orthographyCheckUseCase } from './use-cases';
-import { orthographyDTO } from './DTOs';
+import { orthographyCheckUseCase, prosConsDiscuserStreamUseCase, prosConsDiscuserUseCase } from './use-cases';
+import { orthographyDTO, prosConsDiscuserDTO } from './DTOs';
 import OpenAI from 'openai';
 
 // ? esta es la inyeccion directa que recibe el controlador
@@ -9,7 +9,6 @@ import OpenAI from 'openai';
 
 @Injectable()
 export class GptService {
-    
     
     private openai = new OpenAI({
         apiKey: process.env.OPENAI_API_KEY
@@ -21,4 +20,15 @@ export class GptService {
         // ! aca se llama desde los casos de uso
         return await  orthographyCheckUseCase(this.openai, {prompt: dto.prompt}) 
     }
+
+    // *: para obtener pros y contras para una comparacion
+    async prosConsDicusser(dto: prosConsDiscuserDTO) {
+        return await prosConsDiscuserUseCase(this.openai, dto);
+    }
+    
+    // * habilita el stream
+    async prosConsDicusserStream(dto: prosConsDiscuserDTO) {
+        return await prosConsDiscuserStreamUseCase(this.openai, dto);
+    }
+
 }
