@@ -52,3 +52,12 @@ en esta seccion se revisa los siguientes datos
  
 en esta rama se trabaja en un software que tenga la capacidad de traducir un texto de un idioma a otro
 
+### textoToAudio
+
+la idea aca es que desde un audio obtenido se genere el texto.
+
+* Generar audio en diferentes formatos
+* Almacenar audio en el FileSystem del backend 
+  * Esto solamente para esta practica. si esto se hace en la vida real, se debe de usar un servicio para almacenar estos archivos
+* Creación de endpoint para obtener audios previamente generados
+* Mensajes de error personalizados en Nest.
