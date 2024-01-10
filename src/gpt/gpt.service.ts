@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { orthographyCheckUseCase, prosConsDiscuserStreamUseCase, prosConsDiscuserUseCase } from './use-cases';
-import { orthographyDTO, prosConsDiscuserDTO } from './DTOs';
+import { orthographyCheckUseCase, prosConsDiscuserStreamUseCase, prosConsDiscuserUseCase, translatorUseCase } from './use-cases';
+import { TranslatorDTO, orthographyDTO, prosConsDiscuserDTO } from './DTOs';
 import OpenAI from 'openai';
 
 // ? esta es la inyeccion directa que recibe el controlador
@@ -29,6 +29,12 @@ export class GptService {
     // * habilita el stream
     async prosConsDicusserStream(dto: prosConsDiscuserDTO) {
         return await prosConsDiscuserStreamUseCase(this.openai, dto);
+    }
+    
+    // * para que tradusca de un idioma a otro
+    async translator(dto: TranslatorDTO)
+    {
+        return await translatorUseCase(this.openai, dto)
     }
 
 }
