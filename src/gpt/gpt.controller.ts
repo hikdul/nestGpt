@@ -1,7 +1,9 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, HttpStatus, MaxFileSizeValidator, Param, ParseFilePipe, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { GptService } from './gpt.service';
 import { orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, TranslatorDTO } from './DTOs';
 import type { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import {diskStorage} from 'multer'
 
 @Controller('gpt')
 export class GptController {
@@ -69,6 +71,31 @@ export class GptController {
     res.setHeader('Content-Type','audio/mp3')
     res.status(HttpStatus.OK)
     res.sendFile(fp)
+  }
+  
+
+  // * transforma un audio a texto
+  // ? que son los interseptores.. investigar mas sobre este detalle en nest
+  // ? crear decoradores personalisado.. esta para reducir el codigo en el interceptor y tambien que utilidad tienen. 
+  @Post('audio-to-text')
+  @UseInterceptors(FileInterceptor('audio', {
+    storage: diskStorage({
+      destination: './generate/uploads/',
+      filename(req, file, callback) {
+          const ext = file.originalname.split('.').pop()
+          const fileName = `${new Date().getTime()}.${ext}`
+          return callback(null,fileName)
+      },
+    })
+  }))
+  async audioToText(@UploadedFile(new ParseFilePipe({
+    validators:[
+      new MaxFileSizeValidator({maxSize:1000*1024*3, message:'peso maximo 3Mb'}),
+      new FileTypeValidator({ fileType: 'audio/*'})
+    ]
+  })) audio:Express.Multer.File): Promise<string>
+  {
+    return 'done'
   }
   
 }
