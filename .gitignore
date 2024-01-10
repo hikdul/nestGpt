@@ -37,3 +37,8 @@ lerna-debug.log*
 # configuracion de amibente
 # buscar en ==> https://platform.openai.com/api-keys
 .env
+
+# para los recursos almacenados
+# utilisando el ! indicamos que este elemento no lo ignore
+/generate/*
+!/generate/.gitkeep

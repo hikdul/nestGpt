@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { orthographyCheckUseCase, prosConsDiscuserStreamUseCase, prosConsDiscuserUseCase, translatorUseCase } from './use-cases';
-import { TranslatorDTO, orthographyDTO, prosConsDiscuserDTO } from './DTOs';
+import { getAudioToCode, orthographyCheckUseCase, prosConsDiscuserStreamUseCase, prosConsDiscuserUseCase, textToAudioUseCase, translatorUseCase } from './use-cases';
+import { TranslatorDTO, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, textToAudioGETDTO } from './DTOs';
 import OpenAI from 'openai';
 
 // ? esta es la inyeccion directa que recibe el controlador
@@ -36,5 +36,18 @@ export class GptService {
     {
         return await translatorUseCase(this.openai, dto)
     }
+    
+    // * retorna el audio del texto ingresado
+    async textToAudio(dto: textToAudioDTO)
+    {
+        const {prompt, voice} = dto
+        return await textToAudioUseCase(this.openai, {prompt, voice})
+    }
+    // * retorna el audio que se solicite por su codigo
+    async textToAudioGet(code:string)
+    {
+        return await getAudioToCode({code})
+    }
+    
 
 }
