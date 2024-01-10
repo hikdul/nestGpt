@@ -63,3 +63,11 @@ la idea aca es que desde un audio obtenido se genere el texto.
   * Esto solamente para esta practica. si esto se hace en la vida real, se debe de usar un servicio para almacenar estos archivos
 * Creación de endpoint para obtener audios previamente generados
 * Mensajes de error personalizados en Nest.
+
+### audioTexto
+
+en esta rama se ven los cambio generales para trabajar con la transformacion de audio a texto. esto con la idea de generar subtitulos y otro tipo de elementos utiles para diversos tipos de aplicaciones. Los puntos resaltante son los siguientes
+
+* Transcripciones
+* Subtítulos en varios formatos
+* Crear el archivo en filesystem
