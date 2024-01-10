@@ -47,3 +47,8 @@ en esta seccion se revisa los siguientes datos
 * @Res
 * Chunks
 * DTOs
+
+### traducciones
+ 
+en esta rama se trabaja en un software que tenga la capacidad de traducir un texto de un idioma a otro
+
