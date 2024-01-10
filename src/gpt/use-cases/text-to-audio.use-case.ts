@@ -5,6 +5,7 @@ import { optionsTextToAudio } from "./interfaces";
 import { selectVoice } from "../helpers";
 import * as path from "path";
 import * as fs from "fs";
+import { NotFoundException } from "@nestjs/common";
 
 export const textToAudioUseCase = async (openai: OpenAI, { prompt, voice }: optionsTextToAudio) => 
 {
@@ -35,7 +36,9 @@ export const textToAudioUseCase = async (openai: OpenAI, { prompt, voice }: opti
 export const getAudioToCode = async ({code}) =>
 {
 
-    const folderPath = path.resolve(__dirname, '../../../generate/audios/')
-    const spechfile = path.resolve(`${folderPath}/${code}.mp3`)
-    return spechfile
+    const filePath = path.resolve(__dirname, `../../../generate/audios/${code}.mp3`)
+    const fpexits = fs.existsSync(filePath)
+    if(!fpexits)
+        throw new NotFoundException('codigo no valida o el archivo ya no existe')
+    return filePath
 }

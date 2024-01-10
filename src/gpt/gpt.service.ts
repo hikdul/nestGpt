@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { getAudioToCode, orthographyCheckUseCase, prosConsDiscuserStreamUseCase, prosConsDiscuserUseCase, textToAudioUseCase, translatorUseCase } from './use-cases';
-import { TranslatorDTO, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, textToAudioGETDTO } from './DTOs';
+import { TranslatorDTO, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO } from './DTOs';
 import OpenAI from 'openai';
 
 // ? esta es la inyeccion directa que recibe el controlador
