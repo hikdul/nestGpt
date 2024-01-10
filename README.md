@@ -6,7 +6,9 @@
 
 primer proyecto construido en [Nest](https://github.com/nestjs/nest).
 
-en este proyecto solo se prueba el uso de nest como un backend que se comunica con las api's de OpenIA para simular diferentes comportamientos de ChatGpt
+en este proyecto solo se prueba el uso de nest como un backend que se comunica con las api's de OpenIA para simular diferentes comportamientos de ChatGpt.
+
+el frontEnd de este proyecto esta en esta [direccion](https://github.com/hikdul/reactgpt)
 
 ## Installation
 
