@@ -1,3 +1,6 @@
+// * =======================================//
+// * esta son las option de los casos de uso  
+// * =======================================//
 
 export interface options {
     prompt: string

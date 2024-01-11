@@ -4,7 +4,6 @@ import { options } from "./interfaces";
 // note: aca ira el caso en que espero es stream
 export const prosConsDiscuserStreamUseCase = async (openai: OpenAI, { prompt }: options) => 
 {
-
     return await openai.chat.completions.create({
         // ! solo con esta opcion se activa el stream 
         stream: true,
@@ -27,6 +26,4 @@ export const prosConsDiscuserStreamUseCase = async (openai: OpenAI, { prompt }: 
         temperature: 0.8,
         max_tokens: 500,
     });
-
-    
 }

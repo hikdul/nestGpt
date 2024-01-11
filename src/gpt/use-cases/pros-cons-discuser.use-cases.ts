@@ -3,7 +3,6 @@ import { options } from "./interfaces";
 
 export const prosConsDiscuserUseCase = async (openai: OpenAI, { prompt }: options) => 
 {
-
     const completion = await openai.chat.completions.create({
         messages: [
             { role: "system",
@@ -25,7 +24,5 @@ export const prosConsDiscuserUseCase = async (openai: OpenAI, { prompt }: option
         max_tokens: 500,
     });
 
-  //  console.log({completion})
-    
     return completion.choices[0].message
 }

@@ -1,5 +1,3 @@
-
-
 import OpenAI from "openai"
 import { optionsTextToAudio } from "./interfaces";
 import { selectVoice } from "../helpers";
@@ -9,7 +7,7 @@ import { NotFoundException } from "@nestjs/common";
 
 export const textToAudioUseCase = async (openai: OpenAI, { prompt, voice }: optionsTextToAudio) => 
 {
-     const selectedVoice = selectVoice(voice)
+    const selectedVoice = selectVoice(voice)
 
     // ! desde aca se puede generar datos o carpetas personalisadas para saber desde que usuario o fecha se genero x elemento
     const folderPath = path.resolve(__dirname, '../../../generate/audios/')
@@ -24,7 +22,6 @@ export const textToAudioUseCase = async (openai: OpenAI, { prompt, voice }: opti
         response_format: 'mp3',
     })
     
-    
     // ** ahora transformamos el buffer y lo guardamos en un archivo local
     // ?? de mi parte es posible que no almacene este archivo ya que literal no me interesa almacenar esta data en esta prueba 
     const buffer = Buffer.from(await mp3.arrayBuffer())
@@ -35,7 +32,6 @@ export const textToAudioUseCase = async (openai: OpenAI, { prompt, voice }: opti
 
 export const getAudioToCode = async ({code}) =>
 {
-
     const filePath = path.resolve(__dirname, `../../../generate/audios/${code}.mp3`)
     const fpexits = fs.existsSync(filePath)
     if(!fpexits)

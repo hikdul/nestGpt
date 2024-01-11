@@ -14,6 +14,7 @@ export class GptService {
         apiKey: process.env.OPENAI_API_KEY
     })
 
+    // * =================================================/
     // *: estos metodos pueden o no ser asincronos.
         // *: el controlador no necesita llamar al await ya que igual siempre se espera retornar una promesa
     async orthographyCheck(dto: orthographyDTO){
@@ -21,35 +22,42 @@ export class GptService {
         return await  orthographyCheckUseCase(this.openai, {prompt: dto.prompt}) 
     }
 
+    // * =================================================/
     // *: para obtener pros y contras para una comparacion
     async prosConsDicusser(dto: prosConsDiscuserDTO) {
         return await prosConsDiscuserUseCase(this.openai, dto);
     }
     
-    // * habilita el stream
+    // * ==================/
+    // * habilita el stream 
     async prosConsDicusserStream(dto: prosConsDiscuserDTO) {
         return await prosConsDiscuserStreamUseCase(this.openai, dto);
     }
     
-    // * para que tradusca de un idioma a otro
+    // * ======================================/
+    // * para que tradusca de un idioma a otro  
     async translator(dto: TranslatorDTO)
     {
         return await translatorUseCase(this.openai, dto)
     }
     
-    // * retorna el audio del texto ingresado
+    // * ====================================/
+    // * retorna el audio del texto ingresado 
     async textToAudio(dto: textToAudioDTO)
     {
         const {prompt, voice} = dto
         return await textToAudioUseCase(this.openai, {prompt, voice})
     }
-    // * retorna el audio que se solicite por su codigo
+
+    // * ==============================================/
+    // * retorna el audio que se solicite por su codigo 
     async textToAudioGet(code:string)
     {
         return await getAudioToCode({code})
     }
-    // * para transformar audio a texto
-    
+
+    // * ==============================/
+    // * para transformar audio a texto 
     async AudioToText({audio, prompt}:audioToTextDTO)
     {
         return await audioToTextUseCase(this.openai, {audio, prompt})
