@@ -71,3 +71,13 @@ en esta rama se ven los cambio generales para trabajar con la transformacion de 
 * Transcripciones
 * Subtítulos en varios formatos
 * Crear el archivo en filesystem
+
+### imagenes
+
+esta es hasta ahora la seccion que parece solicitada mas trabaja que las anteriores. especialmente se centra en realizar las siguientes tareas:
+
+* Generación de imágenes basados en prompts
+* Editar partes de la imagen basado en mascaras
+* Generar variaciones a una imagen.
+
+por ahora veamos como nos va creando el FrontEnd
