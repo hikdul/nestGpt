@@ -14,3 +14,8 @@ export interface optionsTextToAudio
     prompt: string
     voice: string
 }
+
+export interface OptionsAutoToText{
+    prompt?: string
+    audio: Express.Multer.File
+}

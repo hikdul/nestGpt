@@ -1,9 +1,10 @@
 import { Body, Controller, FileTypeValidator, Get, HttpStatus, MaxFileSizeValidator, Param, ParseFilePipe, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { GptService } from './gpt.service';
-import { orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, TranslatorDTO } from './DTOs';
+import { audioToTextDTO2, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, TranslatorDTO } from './DTOs';
 import type { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {diskStorage} from 'multer'
+import { Transcription } from 'openai/resources/audio/transcriptions';
 
 @Controller('gpt')
 export class GptController {
@@ -44,7 +45,7 @@ export class GptController {
     // ! aca cierro la llamada del stream.
     res.end()
     
-  }
+    }
   
  // *  traducto entre idiomas
   @Post('translate')
@@ -82,20 +83,26 @@ export class GptController {
     storage: diskStorage({
       destination: './generate/uploads/',
       filename(req, file, callback) {
-          const ext = file.originalname.split('.').pop()
-          const fileName = `${new Date().getTime()}.${ext}`
-          return callback(null,fileName)
+        const ext = file.originalname.split('.').pop()
+        const fileName = `${new Date().getTime()}.${ext}`
+        return callback(null,fileName)
       },
     })
   }))
-  async audioToText(@UploadedFile(new ParseFilePipe({
+  async audioToText(
+    @UploadedFile(new ParseFilePipe({
     validators:[
       new MaxFileSizeValidator({maxSize:1000*1024*3, message:'peso maximo 3Mb'}),
       new FileTypeValidator({ fileType: 'audio/*'})
     ]
-  })) audio:Express.Multer.File): Promise<string>
+  })) audio:Express.Multer.File,
+    @Body() {prompt}: audioToTextDTO2
+  ): Promise<Transcription>
   {
-    return 'done'
+    // -- este elemento si tiene bastante tela en la cobecera. Se debe de mejorar.
+    return this.gptService.AudioToText({ audio, prompt })
   }
   
 }
+
+
