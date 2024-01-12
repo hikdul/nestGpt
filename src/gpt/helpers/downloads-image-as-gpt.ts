@@ -29,6 +29,6 @@ export const  downloadImageAsPNG = async (url: string) =>{
     // ~ lo guardamos en un archivo 
     .toFile(completePAth)
 
-    return completePAth
+    return imageName
     
 }
