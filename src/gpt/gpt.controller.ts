@@ -1,6 +1,6 @@
 import { Body, Controller, FileTypeValidator, Get, HttpStatus, MaxFileSizeValidator, Param, ParseFilePipe, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { GptService } from './gpt.service';
-import { audioToTextDTO2, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, TranslatorDTO } from './DTOs';
+import { audioToTextDTO2, imageGenerationDTO, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, TranslatorDTO } from './DTOs';
 import type { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {diskStorage} from 'multer'
@@ -10,6 +10,11 @@ import { Transcription } from 'openai/resources/audio/transcriptions';
 export class GptController {
 
   constructor(private readonly gptService: GptService) {}
+
+  @Get('prueba')
+  prueba(){
+    return {ok: true}
+  }
   
   // * para enviar ese detalle!!
   @Post('orthography-check')
@@ -101,6 +106,22 @@ export class GptController {
   {
     // -- este elemento si tiene bastante tela en la cobecera. Se debe de mejorar.
     return this.gptService.AudioToText({ audio, prompt })
+  }
+  
+  @Post('image-generation')
+  async imageGeneration(@Body() dto:imageGenerationDTO)
+  {
+    return await this.gptService.imgGenerator(dto);
+  }
+  
+  @Get('image-generation/:code')
+  async getImageGeneracion(@Param('code') code:string ,@Res() res: Response)
+  {
+    
+    const fp = await this.gptService.imageGenerationGet(code);
+    res.setHeader('Content-Type','image/png')
+    res.status(HttpStatus.OK)
+    res.sendFile(fp)
   }
   
 }

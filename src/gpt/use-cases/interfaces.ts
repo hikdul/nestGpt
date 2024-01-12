@@ -22,3 +22,9 @@ export interface OptionsAutoToText{
     prompt?: string
     audio: Express.Multer.File
 }
+
+export interface OptionsImageGenerator{
+    prompt: string 
+    originalImage?: string
+    maskImage?: string
+}
