@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { audioToTextUseCase, getAudioToCode, getImageGeneration, imgGeneratorUserCase, orthographyCheckUseCase, prosConsDiscuserStreamUseCase, prosConsDiscuserUseCase, textToAudioUseCase, translatorUseCase } from './use-cases';
-import { TranslatorDTO, audioToTextDTO, imageGenerationDTO, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO } from './DTOs';
+import { audioToTextUseCase, getAudioToCode, getImageGeneration, imgGeneratorUserCase, imgVariationUseCase, orthographyCheckUseCase, prosConsDiscuserStreamUseCase, prosConsDiscuserUseCase, textToAudioUseCase, translatorUseCase } from './use-cases';
+import { TranslatorDTO, audioToTextDTO, imageGenerationDTO, imageVariationDTO, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO } from './DTOs';
 import OpenAI from 'openai';
 
 // ? esta es la inyeccion directa que recibe el controlador
@@ -70,11 +70,17 @@ export class GptService {
     {
         return await imgGeneratorUserCase(this.openai, {prompt, originalImage, maskImage})
     }
+     
+    async imgGeneratorVariation({baseImage}:imageVariationDTO)
+    {
+        return await imgVariationUseCase(this.openai, {baseImage})
+    }
 
     async imageGenerationGet(code:string)
     {
         return await getImageGeneration({code})
     }
+
 
 }
 

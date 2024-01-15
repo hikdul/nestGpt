@@ -28,3 +28,7 @@ export interface OptionsImageGenerator{
     originalImage?: string
     maskImage?: string
 }
+
+export interface OptionsImageVariation {
+    baseImage: string
+}

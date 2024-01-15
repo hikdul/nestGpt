@@ -1,10 +1,10 @@
-import { Body, Controller, FileTypeValidator, Get, HttpStatus, MaxFileSizeValidator, Param, ParseFilePipe, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { GptService } from './gpt.service';
-import { audioToTextDTO2, imageGenerationDTO, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, TranslatorDTO } from './DTOs';
-import type { Response } from 'express';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { Body, Controller, FileTypeValidator, Get, HttpStatus, MaxFileSizeValidator, Param, ParseFilePipe, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { GptService } from './gpt.service'
+import { audioToTextDTO2, imageGenerationDTO, imageVariationDTO, orthographyDTO, prosConsDiscuserDTO, textToAudioDTO, TranslatorDTO } from './DTOs'
+import type { Response } from 'express'
+import { FileInterceptor } from '@nestjs/platform-express'
 import {diskStorage} from 'multer'
-import { Transcription } from 'openai/resources/audio/transcriptions';
+import { Transcription } from 'openai/resources/audio/transcriptions'
 
 @Controller('gpt')
 export class GptController {
@@ -27,14 +27,14 @@ export class GptController {
   @Post('pros-cons-discuser')
   prosConsDiscuser(@Body() dto: prosConsDiscuserDTO)
   {
-    return this.gptService.prosConsDicusser(dto);
+    return this.gptService.prosConsDicusser(dto)
   }
   
   // * para que genere todo mediante un stream
   @Post('pros-cons-discuser-stream')
   async prosConsDiscuserStream(@Body() dto: prosConsDiscuserDTO, @Res() res: Response)
   {
-    const stream = await this.gptService.prosConsDicusserStream(dto);
+    const stream = await this.gptService.prosConsDicusserStream(dto)
     res.setHeader('Content-Type', 'application/json')
     res.status(HttpStatus.OK)
     
@@ -56,14 +56,14 @@ export class GptController {
   @Post('translate')
   translator(@Body() dto: TranslatorDTO)
   {
-    return this.gptService.translator(dto);
+    return this.gptService.translator(dto)
   }
   
    // * transforma el texto a audio
   @Post('text-to-audio')
   async textToAudio(@Body() dto: textToAudioDTO, @Res() res: Response)
   {
-    const fp = await this.gptService.textToAudio(dto);
+    const fp = await this.gptService.textToAudio(dto)
     res.setHeader('Content-Type','audio/mp3')
     res.status(HttpStatus.OK)
     res.sendFile(fp)
@@ -73,7 +73,7 @@ export class GptController {
   @Get('text-to-audio/:code')
   async textToAudioGet(@Param('code') code:string ,@Res() res: Response)
   {
-    const fp = await this.gptService.textToAudioGet(code);
+    const fp = await this.gptService.textToAudioGet(code)
     res.setHeader('Content-Type','audio/mp3')
     res.status(HttpStatus.OK)
     res.sendFile(fp)
@@ -111,18 +111,25 @@ export class GptController {
   @Post('image-generation')
   async imageGeneration(@Body() dto:imageGenerationDTO)
   {
-    return await this.gptService.imgGenerator(dto);
+    return await this.gptService.imgGenerator(dto)
   }
   
   @Get('image-generation/:code')
   async getImageGeneracion(@Param('code') code:string ,@Res() res: Response)
   {
     
-    const fp = await this.gptService.imageGenerationGet(code);
+    const fp = await this.gptService.imageGenerationGet(code)
     res.setHeader('Content-Type','image/png')
     res.status(HttpStatus.OK)
     res.sendFile(fp)
   }
+  
+  @Post('image-generation-variation')
+  async imageGenerationVariation(@Body() dto:imageVariationDTO)
+  {
+    return await this.gptService.imgGeneratorVariation(dto)
+  }
+  
   
 }
 

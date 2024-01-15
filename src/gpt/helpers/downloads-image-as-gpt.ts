@@ -3,7 +3,8 @@ import * as path from "path"
 import * as fs from "fs"
 import * as sharp from "sharp"
 
-export const  downloadImageAsPNG = async (url: string) =>{
+export const  downloadImageAsPNG = async (url: string, needFullPack: boolean = false) =>
+{
     
     const response = await fetch(url)
     
@@ -28,7 +29,7 @@ export const  downloadImageAsPNG = async (url: string) =>{
     .ensureAlpha()
     // ~ lo guardamos en un archivo 
     .toFile(completePAth)
-
-    return imageName
+    
+    return needFullPack ? completePAth : imageName
     
 }

@@ -1,10 +1,9 @@
 import OpenAI from 'openai'
 import * as fs from 'fs'
-import { OptionsImageGenerator } from './interfaces'
+import { OptionsImageGenerator, OptionsImageVariation } from './interfaces'
 import { downloadBase64ImageAsPng, downloadImageAsPNG, imageResponse } from '../helpers'
 import * as path from 'path'
 import { NotFoundException } from '@nestjs/common'
-import { ImagesResponse } from 'openai/resources'
 
 
 // * ====================================/
@@ -26,9 +25,34 @@ export const imgGeneratorUserCase = async (openia: OpenAI, {prompt, originalImag
 {
     if(!originalImage || !maskImage)
         return await CrearRespuestaDeImagen( await createImage(openia,prompt))
-    const pngImagePath = await downloadImageAsPNG(originalImage)// ? la idea es que originalImage sea del estilo: http://localhost:3000/... 
-    const maskPath = await downloadBase64ImageAsPng(maskImage) // ?  base64?=...
+    const pngImagePath = await downloadImageAsPNG(originalImage, true)// ? la idea es que originalImage sea del estilo: http://localhost:3000/... 
+    const maskPath = await downloadBase64ImageAsPng(maskImage , true) // ?  base64?=...
     return await CrearRespuestaDeImagen(await modificarImage(openia, prompt, pngImagePath, maskPath))
+}
+// * =======================================/
+// * caso de uso para solicitar variaciones  
+
+export const imgVariationUseCase = async (openia: OpenAI, {baseImage}: OptionsImageVariation) => 
+{
+    
+    const pngImgPath = await downloadImageAsPNG(baseImage, true)
+    
+    const response = await openia.images.createVariation({
+        model: 'dall-e-2',
+        image: fs.createReadStream(pngImgPath),
+        n: 1,
+        size: '1024x1024',
+        response_format: 'url'
+    })
+    
+    const newImage = await downloadImageAsPNG(response.data[0].url)
+    
+    return {
+        url: newImage,
+        localPath: response.data[0].url,
+        revsised_prompt: response.data[0].revised_prompt
+    }
+
     
 }
 
@@ -38,8 +62,8 @@ const modificarImage = async (openia, prompt, pngImagePath, maskPath)
 :Promise<OpenAI.Images.ImagesResponse> => 
 {
     return await await openia.images.edit({
-        model: 'dall-e-2',
-        prompt,
+         model: 'dall-e-2',
+       prompt,
         image: fs.createReadStream(pngImagePath),
         mask: fs.createReadStream(maskPath),
         n: 1,
