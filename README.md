@@ -81,3 +81,14 @@ esta es hasta ahora la seccion que parece solicitada mas trabaja que las anterio
 * Generar variaciones a una imagen.
 
 por ahora veamos como nos va creando el FrontEnd
+
+### Asistente de OpenIA
+
+Por fin llegamos a este punto, aca aprenderemos a ver lo del asistente. Las siguientes seran los puntos que se veran en esta seccion: 
+
+* Creación de mensajes
+* Creación de Threads
+* Creación de Ejecución (Run)
+* Obtener listado de mensajes
+* Revisar estado de la ejecución
+* Filtrar mensajes
