@@ -14,6 +14,6 @@ export const createMessageUseCase = async (openai: OpenAI, {threadId,question}: 
         content: question,
     })
     
-    return message
+    //return message
 
 }

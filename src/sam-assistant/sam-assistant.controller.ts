@@ -14,12 +14,7 @@ export class SamAssistantController {
 
   @Post('user-question')
   async userQuestion(@Body() { threadId, question }: questionDTO) {
-    this.samAssistantService.createdUserQuestion({ threadId, question })
-    return {
-      threadId,
-      question,
-      api: 'user-question'
-    }
+    return await this.samAssistantService.createdUserQuestion({ threadId, question })
   }
 
 }
